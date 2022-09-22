@@ -97,8 +97,8 @@ Write at least one test for the success and at least one error behavior of each 
 To deploy the tests, run
 
 ```bash
-dropdb trivia_test
-createdb trivia_test
-psql trivia_test < trivia.psql
+dropdb trivia
+createdb trivia
+psql trivia < trivia.psql
 python test_flaskr.py
 ```
