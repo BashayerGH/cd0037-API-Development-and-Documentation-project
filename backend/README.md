@@ -49,237 +49,263 @@ flask run --reload
 The `--reload` flag will detect file changes and restart the server automatically.
 ## API Endpoints
 
-`1. GET '/api/trivia/categories'`
+`GET '/categories'`
 
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 - Request Arguments: None
-- Returns: An object with a single key, `categories`, that contains an object of `id: category_string` key: value pairs.
+- Returns: An object with categories, that contains an object of id: category_string key:value pairs, and success flag.
 
 ```json
 {
-  "1": "Science",
-  "2": "Art",
-  "3": "Geography",
-  "4": "History",
-  "5": "Entertainment",
-  "6": "Sports"
-}
-```
-
-`2. GET '/api/trivia/questions'`
-
-- Fetches a dictionary of questions (every 10 questions)
-- Request Arguments: None
-- Returns: An object with a single key, `questions`, `total`, `currentcategory`, `categories`
-
-
-```json
-{
-   "categories":[
-      {
-         "id":1,
-         "type":"Science"
-      },
-      {
-         "id":2,
-         "type":"Art"
-      },
-      {
-         "id":3,
-         "type":"Geography"
-      },
-      {
-         "id":4,
-         "type":"History"
-      },
-      {
-         "id":5,
-         "type":"Entertainment"
-      },
-      {
-         "id":6,
-         "type":"Sports"
-      }
-   ],
-   "currentcategory":5,
-   "questions":[
-      {
-         "answer":"Apollo 13",
-         "category":5,
-         "difficulty":4,
-         "id":2,
-         "question":"What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
-      },
-      {
-         "answer":"Tom Cruise",
-         "category":5,
-         "difficulty":4,
-         "id":4,
-         "question":"What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
-      },
-      {
-         "answer":"Maya Angelou",
-         "category":4,
-         "difficulty":2,
-         "id":5,
-         "question":"Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
-      },
-      {
-         "answer":"Muhammad Ali",
-         "category":4,
-         "difficulty":1,
-         "id":9,
-         "question":"What boxer's original name is Cassius Clay?"
-      },
-      {
-         "answer":"Brazil",
-         "category":6,
-         "difficulty":3,
-         "id":10,
-         "question":"Which is the only team to play in every soccer World Cup tournament?"
-      },
-      {
-         "answer":"Uruguay",
-         "category":6,
-         "difficulty":4,
-         "id":11,
-         "question":"Which country won the first ever soccer World Cup in 1930?"
-      },
-      {
-         "answer":"George Washington Carver",
-         "category":4,
-         "difficulty":2,
-         "id":12,
-         "question":"Who invented Peanut Butter?"
-      },
-      {
-         "answer":"The Palace of Versailles",
-         "category":3,
-         "difficulty":3,
-         "id":14,
-         "question":"In which royal palace would you find the Hall of Mirrors?"
-      },
-      {
-         "answer":"Agra",
-         "category":3,
-         "difficulty":2,
-         "id":15,
-         "question":"The Taj Mahal is located in which Indian city?"
-      },
-      {
-         "answer":"Escher",
-         "category":2,
-         "difficulty":1,
-         "id":16,
-         "question":"Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
-      }
-   ],
-   "success":true,
-   "total":30
-}
-```
-
-
-
-`3. DELETE '/api/trivia/questions/{id}'`
-
-- Delete a question by its id
-- Request Arguments: Id of the question
-- Returns: An object with a single key, `question_id` and `success` flag
-
-```json
-{
-    "question_id": 2,
+    "categories": {
+        "1": "Science",
+        "2": "Art",
+        "3": "Geography",
+        "4": "History",
+        "5": "Entertainment",
+        "6": "Sports"
+    },
     "success": true
 }
 ```
 
-`4. POST '/api/trivia/questions'`
+---
 
-- Post a question by `question`, `answer`, `category`, `difficulty`
-- Request Arguments: None
-- Returns: the same request body with a success flag.
+`GET '/questions?page=${integer}'`
 
-```json
-{
-    "answer": "..",
-    "category": 2,
-    "difficulty": 4,
-    "question": "..",
-    "success": true
-}
-```
-
-
-`5. POST '/api/trivia/questions/search'`
-
-- search for a question by `question`
-- Request Arguments: searchTerm
-- Returns: An object of `questions`, a single key, `currentcategory`, `success` flag and the total results number `total`
+- Fetches a paginated set of questions, a total number of questions, all categories and current category string.
+- Request Arguments: `page` - integer
+- Returns: An object with 10 paginated questions, total questions, object including all categories, and current category string
+and success flag.
 
 ```json
 {
-    "currentcategory": 2,
+    "categories": {
+        "1": "Science",
+        "2": "Art",
+        "3": "Geography",
+        "4": "History",
+        "5": "Entertainment",
+        "6": "Sports"
+    },
+    "current_category": 4,
     "questions": [
         {
-            "answer": "Mona Lisa",
-            "category": 2,
+            "answer": "Maya Angelou",
+            "category": 4,
+            "difficulty": 2,
+            "id": 5,
+            "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
+        },
+        {
+            "answer": "Muhammad Ali",
+            "category": 4,
+            "difficulty": 1,
+            "id": 9,
+            "question": "What boxer's original name is Cassius Clay?"
+        },
+        {
+            "answer": "Brazil",
+            "category": 6,
             "difficulty": 3,
-            "id": 17,
-            "question": "La Giaconda is better known as what?"
-        }
-    ],
-    "success": true,
-    "total": 1
-}
-```
-
-
-
-`6. POST '/api/trivia/categories/{id}/questions'`
-
-- search for a question by `question` by its `category`
-- Request Arguments: the id of the category `category_id`
-- Returns: An object of `questions`, a single key, `category_id`, `success` flag and the total results number `total`
-
-```json
-{
-    "category_id": 5,
-    "questions": [
+            "id": 10,
+            "question": "Which is the only team to play in every soccer World Cup tournament?"
+        },
         {
-            "answer": "Tom Cruise",
-            "category": 5,
+            "answer": "Uruguay",
+            "category": 6,
             "difficulty": 4,
-            "id": 4,
-            "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
-        }
-    ],
-    "success": true,
-    "total": 1
-}
-```
-
-
-`7. POST '/api/trivia/quizzes'`
-
-- get a question to play the quiz
-- Request Arguments: `category` and `previous question` as parameters 
-- Returns: An object of `question` and `success` flag
-
-```json
-{
-    "question": [
+            "id": 11,
+            "question": "Which country won the first ever soccer World Cup in 1930?"
+        },
+        {
+            "answer": "Agra",
+            "category": 3,
+            "difficulty": 2,
+            "id": 15,
+            "question": "The Taj Mahal is located in which Indian city?"
+        },
+        {
+            "answer": "Escher",
+            "category": 2,
+            "difficulty": 1,
+            "id": 16,
+            "question": "Which Dutch graphic artist–initials M C was a creator of optical illusions?"
+        },
         {
             "answer": "Mona Lisa",
             "category": 2,
             "difficulty": 3,
             "id": 17,
             "question": "La Giaconda is better known as what?"
+        },
+        {
+            "answer": "One",
+            "category": 2,
+            "difficulty": 4,
+            "id": 18,
+            "question": "How many paintings did Van Gogh sell in his lifetime?"
+        },
+        {
+            "answer": "Jackson Pollock",
+            "category": 2,
+            "difficulty": 2,
+            "id": 19,
+            "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
+        },
+        {
+            "answer": "The Liver",
+            "category": 1,
+            "difficulty": 4,
+            "id": 20,
+            "question": "What is the heaviest organ in the human body?"
+        }
+    ],
+    "total_questions": 31
+}
+```
+
+---
+
+`GET '/categories/${id}/questions'`
+
+- Fetches questions for a cateogry specified by id request argument
+- Request Arguments: `id` - integer
+- Returns: An object with questions for the specified category, total questions, and current category id, and success flag.
+
+```json
+{
+    "category_id": 1,
+    "questions": [
+        {
+            "answer": "The Liver",
+            "category": 1,
+            "difficulty": 4,
+            "id": 20,
+            "question": "What is the heaviest organ in the human body?"
+        },
+        {
+            "answer": "Alexander Fleming",
+            "category": 1,
+            "difficulty": 3,
+            "id": 21,
+            "question": "Who discovered penicillin?"
+        },
+        {
+            "answer": "Blood",
+            "category": 1,
+            "difficulty": 4,
+            "id": 22,
+            "question": "Hematology is a branch of medicine involving the study of what?"
+        },
+        {
+            "answer": "Jupiter",
+            "category": 1,
+            "difficulty": 4,
+            "id": 24,
+            "question": "Name the largest planet of our Solar System?"
         }
     ],
     "success": true,
+    "total": 18
 }
 ```
+
+---
+
+`DELETE '/questions/${id}'`
+
+- Deletes a specified question using the id of the question
+- Request Arguments: `id` - integer
+- Returns: Does not need to return anything besides the appropriate HTTP status code. Optionally can return the id of the question. If you are able to modify the frontend, you can have it remove the question using the id instead of refetching the questions.
+
+```json
+{
+    "question_id": 5,
+    "success": true
+}
+```
+---
+
+`POST '/quizzes'`
+
+- Sends a post request in order to get the next question
+- Request Body:
+
+```json
+{
+    'previous_questions': [1, 4, 20, 15],
+    quiz_category': 'current category'
+}
+```
+
+- Returns: a single new question object
+
+```json
+{
+  "question": {
+    "answer": "Alexander Fleming", 
+    "category": 1, 
+    "difficulty": 3, 
+    "id": 21, 
+    "question": "Who discovered penicillin?"
+  }, 
+  "success": true
+}
+
+```
+
+---
+
+`POST '/questions'`
+
+- Sends a post request in order to add a new question
+- Request Body:
+
+```json
+{
+  "question": "Heres a new question string",
+  "answer": "Heres a new answer string",
+  "difficulty": 1,
+  "category": 3
+}
+```
+
+- Returns: Does not return any new data
+
+---
+
+`POST '/questions/search'`
+
+- Sends a post request in order to search for a specific question by search term
+- Request Body:
+
+```json
+{
+  "searchTerm": "this is the term the user is looking for"
+}
+```
+
+- Returns: any array of questions, a number of totalQuestions that met the search term and the current category string
+
+```json
+{
+  "currentcategory": 4, 
+  "questions": [
+   {
+      "id": 1,
+      "question": "This is a question",
+      "answer": "This is an answer",
+      "difficulty": 5,
+      "category": 5
+   }
+  ], 
+  "success": true, 
+  "total": 1
+}
+
+```
+
 
 ## Testing
 
