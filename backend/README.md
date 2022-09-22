@@ -179,6 +179,108 @@ The `--reload` flag will detect file changes and restart the server automaticall
 }
 ```
 
+
+
+`3. DELETE '/api/trivia/questions/{id}'`
+
+- Delete a question by its id
+- Request Arguments: Id of the question
+- Returns: An object with a single key, `question_id` and `success` flag
+
+```json
+{
+    "question_id": 2,
+    "success": true
+}
+```
+
+`4. POST '/api/trivia/questions'`
+
+- Post a question by `question`, `answer`, `category`, `difficulty`
+- Request Arguments: None
+- Returns: the same request body with a success flag.
+
+```json
+{
+    "answer": "..",
+    "category": 2,
+    "difficulty": 4,
+    "question": "..",
+    "success": true
+}
+```
+
+
+`5. POST '/api/trivia/questions/search'`
+
+- search for a question by `question`
+- Request Arguments: searchTerm
+- Returns: An object of `questions`, a single key, `currentcategory`, `success` flag and the total results number `total`
+
+```json
+{
+    "currentcategory": 2,
+    "questions": [
+        {
+            "answer": "Mona Lisa",
+            "category": 2,
+            "difficulty": 3,
+            "id": 17,
+            "question": "La Giaconda is better known as what?"
+        }
+    ],
+    "success": true,
+    "total": 1
+}
+```
+
+
+
+`6. POST '/api/trivia/categories/{id}/questions'`
+
+- search for a question by `question` by its `category`
+- Request Arguments: the id of the category `category_id`
+- Returns: An object of `questions`, a single key, `category_id`, `success` flag and the total results number `total`
+
+```json
+{
+    "category_id": 5,
+    "questions": [
+        {
+            "answer": "Tom Cruise",
+            "category": 5,
+            "difficulty": 4,
+            "id": 4,
+            "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+        }
+    ],
+    "success": true,
+    "total": 1
+}
+```
+
+
+`7. POST '/api/trivia/quizzes'`
+
+- get a question to play the quiz
+- Request Arguments: `category` and `previous question` as parameters 
+- Returns: An object of `question` and `success` flag
+
+```json
+{
+    "question": [
+        {
+            "answer": "Mona Lisa",
+            "category": 2,
+            "difficulty": 3,
+            "id": 17,
+            "question": "La Giaconda is better known as what?"
+        }
+    ],
+    "success": true,
+}
+```
+
 ## Testing
 
 Write at least one test for the success and at least one error behavior of each endpoint using the unittest library.
