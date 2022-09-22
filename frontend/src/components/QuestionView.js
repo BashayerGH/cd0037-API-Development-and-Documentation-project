@@ -22,14 +22,14 @@ class QuestionView extends Component {
 
   getQuestions = () => {
     $.ajax({
-      url: `/questions?page=${this.state.page}`, //TODO: update request URL
+      url: `/api/trivia/questions?page=${this.state.page}`,
       type: 'GET',
       success: (result) => {
         this.setState({
           questions: result.questions,
-          totalQuestions: result.total_questions,
+          totalQuestions: result.total,
           categories: result.categories,
-          currentCategory: result.current_category,
+          currentCategory: result.currentcategory,
         });
         return;
       },
@@ -65,13 +65,13 @@ class QuestionView extends Component {
 
   getByCategory = (id) => {
     $.ajax({
-      url: `/categories/${id}/questions`, //TODO: update request URL
+      url: `/api/trivia/categories/${id}/questions`,
       type: 'GET',
       success: (result) => {
         this.setState({
           questions: result.questions,
-          totalQuestions: result.total_questions,
-          currentCategory: result.current_category,
+          totalQuestions: result.total,
+          currentCategory: result.category_id,
         });
         return;
       },
@@ -84,7 +84,7 @@ class QuestionView extends Component {
 
   submitSearch = (searchTerm) => {
     $.ajax({
-      url: `/questions`, //TODO: update request URL
+      url: `/api/trivia/questions/search`,
       type: 'POST',
       dataType: 'json',
       contentType: 'application/json',
@@ -96,8 +96,8 @@ class QuestionView extends Component {
       success: (result) => {
         this.setState({
           questions: result.questions,
-          totalQuestions: result.total_questions,
-          currentCategory: result.current_category,
+          totalQuestions: result.total,
+          currentCategory: result.currentcategory,
         });
         return;
       },
@@ -112,7 +112,7 @@ class QuestionView extends Component {
     if (action === 'DELETE') {
       if (window.confirm('are you sure you want to delete the question?')) {
         $.ajax({
-          url: `/questions/${id}`, //TODO: update request URL
+          url: `/api/trivia/questions/${id}`,
           type: 'DELETE',
           success: (result) => {
             this.getQuestions();
