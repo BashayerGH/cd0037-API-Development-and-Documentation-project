@@ -54,23 +54,26 @@ class TriviaTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 200)
             self.assertEqual(data['success'], True)
             self.assertTrue(data['categories'])
-            self.assertTrue(data['currentcategory'])
-            self.assertTrue(data['total'])
+            self.assertTrue(data['current_category'])
+            self.assertTrue(data['total_questions'])
             self.assertTrue(data['questions'])
             self.assertEqual(len(data['questions']), 10)
 
-    def test_questions_invalid_paginated(self):
-            res = self.client().get(BASE+'/questions?page=100065')
+    def test_get_questions_paginated(self):
+            res = self.client().get(BASE+'/questions?page=1')
             data = json.loads(res.data)
-            self.assertEqual(res.status_code, 404)
-            self.assertEqual(data['success'], False)
-            self.assertEqual(data['message'], 'Resource not found')   
+            self.assertEqual(res.status_code, 200)
+            self.assertEqual(data['success'], True)
+            self.assertTrue(data['categories'])
+            self.assertTrue(data['current_category'])
+            self.assertTrue(data['total_questions'])
+            self.assertTrue(data['questions'])
+            self.assertEqual(len(data['questions']), 10) 
 
     def test_delete_question(self):
-            res = self.client().delete(BASE+'/questions/14')
+            res = self.client().delete(BASE+'/questions/4')
             data = json.loads(res.data)
             self.assertEqual(data['success'], True)
-            self.assertTrue(data['question_id'])
 
     def test_delete_invalid_question(self):
             res = self.client().delete(BASE+'/questions/506')
@@ -121,7 +124,7 @@ class TriviaTestCase(unittest.TestCase):
     def test_search_invalid_data_questions(self):
             # 422
             res = self.client().post(BASE+'/questions/search',
-                                    json={'searchTerm': 'test'})
+                                    json={'searchTerm': 'test121212'})
             data = json.loads(res.data)
             self.assertEqual(res.status_code, 422)
 
