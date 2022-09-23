@@ -181,7 +181,11 @@ def create_app(test_config=None):
         category_id = searched_data['quiz_category']['id']
         previous_questions = searched_data['previous_questions']
 
-        questions = Question.query.filter_by(category=category_id).filter(Question.id.notin_(previous_questions)).all()
+        if category_id == 0:
+          questions = Question.query.order_by(Question.id).filter(Question.category==Question.category).all()
+        else: # any other category
+          questions = Question.query.filter_by(category=category_id).filter(Question.id.notin_(previous_questions)).all()
+        
         question_length = len(questions)
 
         if question_length == 0:
