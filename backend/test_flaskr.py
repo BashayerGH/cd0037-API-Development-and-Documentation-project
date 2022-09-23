@@ -17,9 +17,13 @@ class TriviaTestCase(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = create_app()
         self.client = self.app.test_client
-        self.database_name = "trivia"
-        self.database_path = "postgres://{}/{}".format('localhost:5432', self.database_name)
-        setup_db(self.app, self.database_path)
+
+        self.DB_HOST = os.getenv('DB_HOST', 'localhost:5432')
+        self.DB_USER = os.getenv('DB_USER', 'postgres')
+        self.DB_PASSWORD = os.getenv('DB_PASSWORD', 'postgres')
+        self.DB_NAME = os.getenv('DB_NAME', 'trivia')
+        self.DB_PATH = 'postgresql+psycopg2://{}:{}@{}/{}'.format(self.DB_USER, self.DB_PASSWORD, self.DB_HOST, self.DB_NAME)
+        setup_db(self.app, self.DB_PATH)
 
         # binds the app to the current context
         with self.app.app_context():
@@ -71,7 +75,7 @@ class TriviaTestCase(unittest.TestCase):
             self.assertEqual(len(data['questions']), 10) 
 
     def test_delete_question(self):
-            res = self.client().delete(BASE+'/questions/4')
+            res = self.client().delete(BASE+'/questions/9')
             data = json.loads(res.data)
             self.assertEqual(data['success'], True)
 

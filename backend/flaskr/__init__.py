@@ -182,20 +182,25 @@ def create_app(test_config=None):
         previous_questions = searched_data['previous_questions']
 
         if category_id == 0:
-          questions = Question.query.order_by(Question.id).filter(Question.category==Question.category).all()
-        else: # any other category
-          questions = Question.query.filter_by(category=category_id).filter(Question.id.notin_(previous_questions)).all()
-        
+            questions = Question.query.all()
+        else:
+            questions = Question.query.filter(Question.category == category_id).all()
+
         question_length = len(questions)
 
         if question_length == 0:
-          abort(404)
+            abort(404)
 
-        random_quiz = Question.format(questions[random.randrange(0, question_length)])
+       # generate a random quiz
+        random_quiz = questions[random.randint(0, question_length - 1)]
+
+      # a layer of filteration, to ensure that quiz is not within the previous questiosns
+        while random_quiz.id in previous_questions:
+            random_quiz = questions[random.randint(0, question_length - 1)]
 
         return jsonify({
-          'success': True,
-          'question': random_quiz
+            'success': True,
+            'question': random_quiz.format()
         })
 
       except Exception:
