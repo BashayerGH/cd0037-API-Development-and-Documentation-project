@@ -143,6 +143,25 @@ COPY public.questions (id, question, answer, difficulty, category) FROM stdin;
 21	Who discovered penicillin?	Alexander Fleming	3	1
 22	Hematology is a branch of medicine involving the study of what?	Blood	4	1
 23	Which dung beetle was worshipped by the ancient Egyptians?	Scarab	4	4
+24	What is the largest museum of fine art as defined by available gallery space?	The Louvre	1	2
+25	Who painted The Last Supper over a three-year period between 1495 to 1498?	Leonardo da Vinci	4	2
+26	Which is the tallest mountain in the world?	Mount Everes	3	3
+27	Who discovered penicillin?	Alexander Fleming	4	4
+28	What year did the Challenger Space Shuttle disaster take place?	1986	3	4
+29	What is the name of the biggest technology company in South Korea?	Samsung	1	5
+30	Which animal can be seen on the Porsche logo?	Horse	2	5
+31	Which country won the World Cup 2018?	France	2	6
+32	What is Muhammad Ali’s real name?	Cassius Clay	3	6
+33	How many players are there on a baseball team?	9	4	6
+34	Who painted The Last Supper over a three-year period between 1495 to 1498?	Leonardo da Vinci	4	2
+35	What are the branches of a river called?	Tributaries	3	3
+36	Which of the following is a non metal that remains liquid at room temperature?	Bromine	4	1
+37	Which of the following is used in pencils?	Graphite	4	1
+38	From which mineral is radium obtained?	Pitchblende	4	1
+39	What is The Netherlands also called?	Holland	2	3
+40	Which country would you find the city of Dresden?	Germany	1	3
+41	How many lifeboats were available on the Titanic?	16	4	5
+42	What does NBA stand for?	National Basketball Association	4	6
 \.
 
 
