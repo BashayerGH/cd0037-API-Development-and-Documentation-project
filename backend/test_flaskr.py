@@ -75,7 +75,7 @@ class TriviaTestCase(unittest.TestCase):
             self.assertEqual(len(data['questions']), 10) 
 
     def test_delete_question(self):
-            res = self.client().delete(BASE+'/questions/9')
+            res = self.client().delete(BASE+'/questions/15')
             data = json.loads(res.data)
             self.assertEqual(data['success'], True)
 
